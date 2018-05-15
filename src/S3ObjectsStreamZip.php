@@ -20,10 +20,10 @@
       $this->s3Client();
     }
 
-    public function sendObjects($bucket, $files, $zipname)
+    public function sendObjects($bucket, $files, $zipname = null)
     {
 
-      $this->paramsValidation(array("bucket" => $bucket, "files" => $files, "zipname" => $zipname));
+      $this->paramsValidation(array("bucket" => $bucket, "files" => $files));
 
       $zip = new ZipStream($zipname);
 
@@ -111,15 +111,6 @@
         throw new InvalidParamsException('The array `files` requires a `path` attribute.');
       }
       $this->objectsValidation($params["bucket"], $params["files"]);
-
-      // zipname
-      if (!isset($params["zipname"])) {
-        throw new InvalidParamsException('The parameter `zipname` is required.');
-      }
-      else if (empty($params["zipname"])) {
-        throw new InvalidParamsException('The parameter `zipname` cannot be an empty string.');
-      }
-      
     }
 
     protected function objectsValidation($bucket, $files)
